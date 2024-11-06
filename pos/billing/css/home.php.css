@@ -9,21 +9,25 @@
     }
 
     .bg-gradient-primary {
-        background: linear-gradient(149deg, rgba(119, 172, 233, 1) 5%, rgba(83, 163, 255, 1) 10%, rgba(46, 51, 227, 1) 41%, rgba(40, 51, 218, 1) 61%, rgba(75, 158, 255, 1) 93%, rgba(124, 172, 227, 1) 98%);
+        background: linear-gradient(149deg, #7baee6 5%, #73a3f5 10%, #475cd5 41%, #3b46d4 61%, #5ba1f5 93%, #a2bbe4 98%);
     }
 
     .btn-primary-gradient {
-        background: linear-gradient(to right, #1e85ff 0%, #00a5fa 80%, #00e2fa 100%);
+        background: linear-gradient(to right, #3b99ff 0%, #5bb3f5 80%, #66e2f5 100%);
+        box-shadow: 0 4px 8px rgba(59, 153, 255, 0.3);
     }
 
     .btn-danger-gradient {
-        background: linear-gradient(to right, #f25858 7%, #ff7840 50%, #ff5140 105%);
+        background: linear-gradient(to right, #f27777 7%, #ff9066 50%, #ff6b66 105%);
+        box-shadow: 0 4px 8px rgba(242, 119, 119, 0.3);
     }
 
     main .card {
         height: calc(80%);
         border: none;
         /* Removed borders for cleaner look */
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     main .card-body {
@@ -34,7 +38,7 @@
         position: relative;
         scrollbar-width: thin;
         /* Firefox */
-        scrollbar-color: #888 #f1f1f1;
+        scrollbar-color: #aaa #f1f1f1;
         /* Firefox scrollbar color */
     }
 
@@ -56,10 +60,13 @@
         cursor: pointer;
         transition: opacity 0.2s;
         /* Smooth hover effect */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
     }
 
     .prod-item:hover {
-        opacity: .8;
+        opacity: .9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .prod-item .card-body {
@@ -83,10 +90,11 @@
         cursor: pointer;
         transition: opacity 0.2s;
         /* Smooth hover effect */
+        background-color: #e9f0f9;
     }
 
     .cat-item:hover {
-        opacity: .8;
+        opacity: .9;
     }
 
     /* Custom Scrollbar Styles */
@@ -100,25 +108,27 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #888;
+        background: #aaa;
         /* Scrollbar color */
         border-radius: 10px;
         /* Rounded corners */
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #888;
         /* Darker color on hover */
     }
 
     /* Additional styles for better aesthetics */
     .card-header {
-        background: #e0e0e0;
+        background: #f5f5f5;
         /* Light background for header */
         font-weight: bold;
         /* Bold header text */
         border-bottom: 2px solid #ccc;
         /* Bottom border for separation */
+        color: #4a4a4a;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .btn {
@@ -142,14 +152,14 @@
         position: relative;
         scrollbar-width: thin;
         /* Firefox scrollbar color */
-        scrollbar-color: #888 #f1f1f1;
+        scrollbar-color: #aaa #f1f1f1;
         /* Remove default padding for a cleaner look */
     }
 
     /* Style for selected radio button */
     input[type="radio"]:checked+label {
         font-weight: bold;
-        color: #007bff;
+        color: #4e73df;
         /* Change color to your preference */
     }
 
@@ -174,4 +184,3 @@
 .product-container .products{
     height: 78vh !important;
 }
-  
