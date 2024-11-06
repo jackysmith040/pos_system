@@ -1,51 +1,56 @@
-
-    /* Main footer styling */
+/* Main footer styling */
+.main-footer {
+    width: 100%;
+    background: whitesmoke;
+    color: #f1f1f1;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+  }
+  
+  /* Footer content styling */
+  .footer-content {
+    text-align: center;
+  }
+  
+  /* Text styling with links */
+  .footer-content p {
+    margin: 0;
+    color: darkslategrey;
+  }
+  
+  /* Link styling */
+  .footer-content a {
+    color: red;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-content a:hover {
+    color: darkred;
+  }
+  
+  /* Separate styling for "Tech" */
+  .text-tech {
+    color: black !important;
+  }
+  
+  /* Additional text styling */
+  .footer-content span {
+    /* display: block; */
+    font-size: 0.8rem;
+    color: #bbb;
+    margin-top: 5px;
+  }
+  
+  /* Responsive improvements for smaller screens */
+  @media (max-width: 600px) {
     .main-footer {
-        width: 100%;
-        background: whitesmoke;
-        color: #f1f1f1;
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-        font-size: 0.9rem;
+      padding: 15px;
+      font-size: 0.8rem;
     }
-
-    /* Footer content styling */
-    .footer-content {
-        text-align: center;
-    }
-
-    /* Text styling with links */
-    .footer-content p {
-        margin: 0;
-        color: darkslategrey;
-    }
-
-    /* Link styling */
-    .footer-content a {
-        color: red;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .footer-content a:hover {
-        color: darkred;
-    }
-
-    /* Additional text styling */
-    .footer-content span {
-        display: block;
-        font-size: 0.8rem;
-        color: #bbb;
-        margin-top: 5px;
-    }
-
-    /* Responsive improvements for smaller screens */
-    @media (max-width: 600px) {
-        .main-footer {
-            padding: 15px;
-            font-size: 0.8rem;
-        }
-    }
+  }
+  
