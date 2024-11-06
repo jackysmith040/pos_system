@@ -71,7 +71,7 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header text-dark">
-                    <b>Order List</b>
+                    <!-- <b>Purchases</b> -->
                     <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right"
                             href="../index.php?page=sales_report" id="">
                             <i class="fa fa-home"></i> Home
@@ -83,7 +83,7 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                         <input type="hidden" name="order_number" value="<?php echo $order_number ?>">
                         <div class="bg-white" id='o-list'>
                             <div class="d-flex w-100 bg-white mb-1">
-                                <label for="" class="text-dark"><b>Order No.</b></label>
+                                <label for="" class="text-dark"><b>Invoice: </b></label>
                                 <span class="form-control-sm"><?php echo $order_number ?></span>
                             </div>
                             <table class="table bg-light mb-5">
@@ -151,7 +151,7 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                                 <tbody>
                                     <tr>
                                         <td><b>
-                                                <h6>Total</h6>
+                                                <h6>Total  : </h6>
                                             </b></td>
                                         <td class="text-right">
                                             <input type="hidden" name="total_amount" value="0">

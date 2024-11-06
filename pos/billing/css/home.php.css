@@ -3,13 +3,7 @@
         overflow: scroll !important ;
     }  */
 
-    .scrollable-container {
-        height: 100%;
-        /* Take full height of body */
-        overflow-y: auto;
-        /* Enable vertical scrolling */
-    }
-
+   
     .view-order {
         height: 100vh;
     }

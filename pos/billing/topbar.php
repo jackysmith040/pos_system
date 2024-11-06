@@ -1,22 +1,9 @@
 <style>
-  .logo {
-    margin: auto;
-    font-size: 20px;
-    background: white;
-    padding: 7px 11px;
-    border-radius: 50% 50%;
-    color: #000000b3;
-  }
-
+  
   /* Style for the logo */
   .custom-logo {
 
-    margin: auto;
-    font-size: 20px;
-    background: white;
-    padding: 7px 11px;
-    border-radius: 50% 50%;
-    color: #000000b3;
+    left: 70rem;
   }
 
 
@@ -34,7 +21,7 @@
 
       <div class="col-md-2 float-left text-dark">
         <!-- <large><b><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></b></large> -->
-        <img src="../assets/uploads/fav-ico.svg" width="180px" height="50px" class="custom-logo" alt="Logo">
+        <img src="../assets/uploads/fav-ico.svg" width="100px" height="40px" class="custom-logo" alt="Logo">
       </div>
       <div class="col-md-8 float-left text-dark mt-3">
         <!-- <p style="color: red; font-size: 14px;"><b>Alert</b> This Project is developed for Academic study purpose only. | Never Sell or Distribute with your Name OR Branding. </p> -->

@@ -1,15 +1,5 @@
 <style>
   /* Style for the logo */
-  .custom-logo {
-
-    margin: auto;
-    font-size: 20px;
-    background: white;
-    padding: 7px 11px;
-    border-radius: 50% 50%;
-    color: #000000b3;
-  }
-
 
   .custom-logo:hover {
     transform: scale(1.05);

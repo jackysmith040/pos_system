@@ -25,13 +25,13 @@
 
     /* Link styling */
     .footer-content a {
-        color: #1e90ff;
+        color: red;
         text-decoration: none;
         transition: color 0.3s ease;
     }
 
     .footer-content a:hover {
-        color: #00c3ff;
+        color: darkred;
     }
 
     /* Additional text styling */
