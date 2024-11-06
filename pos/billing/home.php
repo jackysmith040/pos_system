@@ -204,7 +204,9 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
 
         </div>
     </div>
+    <?php include('../footer.php') ?>
 </div>
+
 <div class="modal fade" id="pay_modal" role='dialog'>
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
