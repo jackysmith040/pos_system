@@ -1,17 +1,21 @@
 <?php include('../db_connect.php') ?>
 <style>
-    body {
-        height: 100vh;
+    /* body {
+        height: 30vh !important;
         /* Make the body full height */
-        overflow: hidden;
+        overflow: scroll !important ;
         /* Hide overflow on body to control scrolling with a wrapper */
-    }
+    } */
 
     .scrollable-container {
         height: 100%;
         /* Take full height of body */
         overflow-y: auto;
         /* Enable vertical scrolling */
+    }
+
+    .view-order {
+        height: 100vh;
     }
 
     .bg-gradient-primary {
@@ -27,7 +31,7 @@
     }
 
     main .card {
-        height: calc(100%);
+        height: calc(80%);
         border: none;
         /* Removed borders for cleaner look */
     }
@@ -45,7 +49,7 @@
     }
 
     #o-list {
-        height: calc(87%);
+        height: 50vh !important;
         overflow-y: auto;
         /* Enable vertical scrolling */
     }
@@ -53,12 +57,12 @@
     #calc {
         position: absolute;
         bottom: 1rem;
-        height: calc(10%);
-        width: calc(98%);
+        /* height: calc(10%);
+        width: calc(98%); */
     }
 
     .prod-item {
-        min-height: 12vh;
+        min-height: 30vh;
         cursor: pointer;
         transition: opacity 0.2s;
         /* Smooth hover effect */
@@ -134,8 +138,8 @@
         /* Button shadow */
     }
 
-    .product-scroll {
-        height: 32rem;
+    .order-container {
+        height: 100%;
         /* Set a height for the container to allow scrolling */
         overflow-y: auto;
         /* Enable vertical scrolling */
@@ -143,6 +147,12 @@
 
     .card-body {
         padding: 0;
+        overflow-y: auto;
+        /* Enable vertical scrolling */ 
+        position: relative;
+        scrollbar-width: thin;
+        /* Firefox scrollbar color */
+        scrollbar-color: #888 #f1f1f1;
         /* Remove default padding for a cleaner look */
     }
 
@@ -152,6 +162,29 @@
         color: #007bff;
         /* Change color to your preference */
     }
+
+    .radio_btns-row {
+        /* width: 2rem; */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+
+    }
+
+ 
+
+    .prod-list {
+        /* Set a height for the container to allow scrolling */
+        overflow-y: scroll !important;
+        /* Enable vertical scrolling */
+    
+    }
+
+.product-container .products{
+    height: 78vh !important;
+}
+  
 </style>
 <?php
 function generateOrderNumber()
@@ -177,11 +210,11 @@ endif;
 
 $order_number = isset($order_number) ? $order_number : generateOrderNumber();
 ?>
-<div class="container-fluid o-field scrollable-container">
-    <div class="row mt-3 ml-3 mr-3">
+<div class="view-order">
+    <div class="row">
 
-        <div class="col-lg-8 p-field product-scroll">
-            <div class="card">
+        <div class="col-lg-8 product-container">
+            <div class="products pb-5">
                 <div class="card-header text-dark">
                     <b>Products</b>
                 </div>
@@ -197,7 +230,7 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="prod-list">
                             <?php
                             // Fetch all products where status = 1
                             $prod = $conn->query("SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.status = 1 ORDER BY p.name ASC");
@@ -327,8 +360,9 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
             <div class="card-footer">
                 <div class="d-flex flex-column align-items-center">
                     <!-- Payment Method Radio Buttons -->
-                    <div class="form-group col-sm-6">
-                        <label>Payment Method</label>
+                    <div class="form-group col-sm-8">
+                        <!-- <label style="position: relative; top: -0.80rem;">Payment Method</label> -->
+                        <radio-row class="radio_btns-row">
                         <div>
                             <label for="payment_method_cash">
                                 <input type="radio" id="payment_method_cash" name="payment_method" value="Cash" checked>
@@ -341,11 +375,12 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                                     value="Mobile Money"> Mobile Money
                             </label>
                         </div>
+                        </radio-row>
                     </div>
 
 
                     <!-- Proceed to Pay Button -->
-                    <button class="btn btn-primary col-sm-6 mt-3 py-2" type="button" id="pay">Proceed to Pay</button>
+                    <button class="btn btn-primary col-sm-6 py-2" type="button" id="pay">Proceed to Pay</button>
 
                 </div>
             </div>
