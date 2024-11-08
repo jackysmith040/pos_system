@@ -269,7 +269,7 @@ class Action
 	extract($_POST);
 	$data = "";
 	foreach ($_POST as $k => $v) {
-		if (!in_array($k, array('id', 'status')) && !is_numeric($k)) {
+		if (!in_array($k, array('id', 'status', 'stock')) && !is_numeric($k)) { // Exclude 'stock' from foreach
 			if ($k == 'price') {
 				$v = str_replace(',', '', $v);
 			}
@@ -281,7 +281,7 @@ class Action
 		}
 	}
 
-	// Handle stock separately to ensure it’s added to the data string
+	// Handle stock separately
 	if (isset($stock) && is_numeric($stock)) {
 		$data .= ", stock='$stock' ";
 	} else {
@@ -311,6 +311,7 @@ class Action
 	if ($save)
 		return 1;
 }
+
 
 	function delete_product()
 	{
