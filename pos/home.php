@@ -1,6 +1,7 @@
 <?php
 // Include the database connection
 include('db_connect.php');
+include('redirect_to_login.php');
 
 // Initialize total variables
 $total_sales = 0;

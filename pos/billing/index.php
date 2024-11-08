@@ -11,7 +11,7 @@
 
 <?php
  include('./header.php'); 
- // include('./auth.php'); 
+ include('../redirect_to_login.php'); 
  ?>
 
 </head>

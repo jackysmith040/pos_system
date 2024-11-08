@@ -1,4 +1,8 @@
-<?php include('../db_connect.php') ?>
+<?php 
+include('../db_connect.php');
+include('../redirect_to_login.php');
+?>
+
 <style>
   <?php include('./css/home.php.css') ?>
 </style>
