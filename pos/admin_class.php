@@ -265,40 +265,53 @@ class Action
 		}
 	}
 	function save_product()
-	{
-		extract($_POST);
-		$data = "";
-		foreach ($_POST as $k => $v) {
-			if (!in_array($k, array('id', 'status')) && !is_numeric($k)) {
-				if ($k == 'price') {
-					$v = str_replace(',', '', $v);
-				}
-				if (empty($data)) {
-					$data .= " $k='$v' ";
-				} else {
-					$data .= ", $k='$v' ";
-				}
+{
+	extract($_POST);
+	$data = "";
+	foreach ($_POST as $k => $v) {
+		if (!in_array($k, array('id', 'status')) && !is_numeric($k)) {
+			if ($k == 'price') {
+				$v = str_replace(',', '', $v);
+			}
+			if (empty($data)) {
+				$data .= " $k='$v' ";
+			} else {
+				$data .= ", $k='$v' ";
 			}
 		}
-		if (isset($status)) {
-			$data .= ", status=1 ";
-		} else {
-			$data .= ", status=0 ";
-		}
-		$check = $this->db->query("SELECT * FROM products where name ='$name' " . (!empty($id) ? " and id != {$id} " : ''))->num_rows;
-		if ($check > 0) {
-			return 2;
-			exit;
-		}
-		if (empty($id)) {
-			$save = $this->db->query("INSERT INTO products set $data");
-		} else {
-			$save = $this->db->query("UPDATE products set $data where id = $id");
-		}
-
-		if ($save)
-			return 1;
 	}
+
+	// Handle stock separately to ensure it’s added to the data string
+	if (isset($stock) && is_numeric($stock)) {
+		$data .= ", stock='$stock' ";
+	} else {
+		$data .= ", stock=0 "; // Default to 0 if stock is not provided or invalid
+	}
+
+	if (isset($status)) {
+		$data .= ", status=1 ";
+	} else {
+		$data .= ", status=0 ";
+	}
+
+	// Check for duplicate product name, excluding current product ID if editing
+	$check = $this->db->query("SELECT * FROM products WHERE name ='$name' " . (!empty($id) ? " AND id != {$id} " : ''))->num_rows;
+	if ($check > 0) {
+		return 2;
+		exit;
+	}
+
+	// Insert or update the product record
+	if (empty($id)) {
+		$save = $this->db->query("INSERT INTO products SET $data");
+	} else {
+		$save = $this->db->query("UPDATE products SET $data WHERE id = $id");
+	}
+
+	if ($save)
+		return 1;
+}
+
 	function delete_product()
 	{
 		extract($_POST);

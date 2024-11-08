@@ -123,7 +123,7 @@ $jsonDataPoints = json_encode($dataPoints, JSON_NUMERIC_CHECK);
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>Invoice</th>
-                                    <th>Order Number</th>
+                                    <th>Sales Number</th>
                                     <th>Amount</th>
                                     <th>Status</th>
                                 </tr>

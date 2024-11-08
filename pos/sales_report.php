@@ -39,7 +39,7 @@ $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
                                 <th class="text-center">#</th>
                                 <th>Date</th>
                                 <th>Invoice</th>
-                                <th>Order Number</th>
+                                <th>Sales Number</th>
                                 <th>Amount</th>
                                 <th>Payment Method</th> <!-- New column for Payment Method -->
                                 
@@ -139,7 +139,7 @@ $('#print').click(function(){
     var ns = $('noscript').clone();
     ns.append(_c);
     var nw = window.open('', '_blank', 'width=900,height=600');
-    nw.document.write('<p class="text-center"><b>Order Report as of <?php echo date("F, Y", strtotime($year . "-" . $month . "-01")) ?></b></p>');
+    nw.document.write('<p class="text-center"><b>Sales Report as of <?php echo date("F, Y", strtotime($year . "-" . $month . "-01")) ?></b></p>');
     nw.document.write(ns.html());
     nw.document.close();
     nw.print();
