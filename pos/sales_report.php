@@ -42,6 +42,7 @@ $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
                                 <th>Order Number</th>
                                 <th>Amount</th>
                                 <th>Payment Method</th> <!-- New column for Payment Method -->
+                                
                             </tr>
                         </thead>
                         <tbody>

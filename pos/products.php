@@ -1,63 +1,9 @@
-<?php include('db_connect.php');?>
+<?php include('db_connect.php'); ?>
 
 <div class="container-fluid">
-	
 	<div class="col-lg-12">
 		<div class="row">
-			<!-- FORM Panel -->
-			<!-- <div class="col-md-4">
-			<form action="" id="manage-product">
-				<div class="card">
-					<div class="card-header">
-						   Product Form
-				  	</div>
-					<div class="card-body">
-							<input type="hidden" name="id">
-							<div class="form-group">
-								<label class="control-label">Category</label>
-								<select name="category_id" id="category_id" class="custom-select select2" required>
-									<option value=""></option>
-									<?php
-									$qry = $conn->query("SELECT * FROM categories order by name asc");
-									while($row=$qry->fetch_assoc()):
-										$cname[$row['id']] = ucwords($row['name']);
-									?>
-									<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
-								<?php endwhile; ?>
-								</select>
-							</div>
-							<div class="form-group">
-								<label class="control-label">Name</label>
-								<input type="text" class="form-control" name="name" required>
-							</div>
-							<div class="form-group">
-								<label class="control-label">Description</label>
-								<textarea name="description" id="description" cols="30" rows="4" class="form-control" required></textarea>
-							</div>
-							<div class="form-group">
-								<label class="control-label">Price</label>
-								<input type="number" class="form-control text-right" name="price" required>
-							</div>
-							<div class="form-group">
-								<div class="custom-control custom-switch">
-								  <input type="checkbox" class="custom-control-input" id="status" name="status" checked value="1" required>
-								  <label class="custom-control-label" for="status">Available</label>
-								</div>
-							</div>
-					</div>
-							
-					<div class="card-footer">
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<button class="btn btn-primary"> Save</button>
-								<button class="btn btn-default" type="button" onclick="$('#manage-product').get(0).reset()"> Cancel</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-			</div> -->
-			<!-- FORM Panel -->
+			<!-- Form Panel omitted for brevity -->
 
 			<!-- Table Panel -->
 			<div class="col-md-12">
@@ -76,37 +22,41 @@
 									<th>Name</th>
 									<th>Description</th>
 									<th>Price</th>
+									<th>Stock</th> <!-- New Stock Column -->
 									<th>Status</th>
-									
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php 
 								$i = 1;
-								$product = $conn->query("SELECT * FROM products order by id asc");
-								while($row=$product->fetch_assoc()):
+								// Load categories into cname array
+								$cname = [];
+								$qry = $conn->query("SELECT * FROM categories ORDER BY name ASC");
+								while($row = $qry->fetch_assoc()) {
+									$cname[$row['id']] = ucwords($row['name']);
+								}
+
+								// Fetch products
+								$product = $conn->query("SELECT * FROM products ORDER BY id ASC");
+								while($row = $product->fetch_assoc()):
 								?>
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
 									<td class="">
-										<?php echo $cname[$row['category_id']] ?>
+										<?php 
+										// Check if category exists in $cname array
+										echo isset($cname[$row['category_id']]) ? $cname[$row['category_id']] : 'Unknown Category'; 
+										?>
 									</td>
+									<td class=""><?php echo $row['name'] ?></td>
+									<td class=""><?php echo $row['description'] ?></td>
+									<td class=""><?php echo number_format($row['price'], 2) ?></td>
+									<td class=""><?php echo $row['stock'] ?></td> <!-- Display stock value -->
 									<td class="">
-									<?php echo $row['name'] ?></td>
-									<td class="">
-									<?php echo $row['description'] ?>
-									<td class="">
-									<?php echo number_format($row['price'],2) ?></td>
-									</td>
-									<td class="">
-										
-										 <?php echo $row['status'] == 1 ? " Available" : "Unavailable" ?>
+										<?php echo $row['status'] == 1 ? "Available" : "Unavailable" ?>
 									</td>
 									<td class="text-center">
-
-										<!-- <a class="btn btn-primary btn-sm edit_product" href="index.php?page=edit-product#<?php echo $row['id'] ?>" type="button" data-id="" data-description="<?php echo $row['description'] ?>" data-name="<?php echo $row['name'] ?>"  data-price="<?php echo $row['price'] ?>"  data-status="<?php echo $row['status'] ?>" data-category_id="<?php echo $row['category_id'] ?>"><i class="fa fa-edit"></i></a> -->
-
 										<button class="btn btn-danger btn-sm delete_product" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i></button>
 									</td>
 								</tr>
@@ -118,29 +68,30 @@
 			</div>
 			<!-- Table Panel -->
 		</div>
-	</div>	
-
+	</div>
 </div>
+
 <style>
-	
-	td{
+	td {
 		vertical-align: middle !important;
 	}
 	td p {
-		margin:unset;
+		margin: unset;
 	}
-	.custom-switch{
+	.custom-switch {
 		cursor: pointer;
 	}
-	.custom-switch *{
+	.custom-switch * {
 		cursor: pointer;
 	}
 </style>
+
 <script>
-	$('#manage-product').on('reset',function(){
-		$('input:hidden').val('')
-		$('.select2').val('').trigger('change')
-	})
+	// Script for managing product form
+	$('#manage-product').on('reset', function() {
+		$('input:hidden').val('');
+		$('.select2').val('').trigger('change');
+	});
 	
 	$('#manage-product').submit(function(e){
 		e.preventDefault()

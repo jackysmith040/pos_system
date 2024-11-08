@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 // Check if user is logged in by checking for a specific session variable, e.g., 'user_id'
 if (!isset($_SESSION['login_id'])) {
