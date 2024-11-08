@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 05:44 PM
+-- Generation Time: Nov 08, 2024 at 08:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,7 +38,6 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `description`) VALUES
-(1, 'Chinese', 'Chinese Items'),
 (2, 'Mexican', 'Mexican Items'),
 (3, 'Pizza', 'Pizza Items'),
 (4, 'Indian', 'Indian items'),
@@ -56,27 +55,29 @@ INSERT INTO `categories` (`id`, `name`, `description`) VALUES
 CREATE TABLE `products` (
   `id` int(30) NOT NULL,
   `category_id` int(30) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `description` text NOT NULL,
-  `price` float NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0=Unavailable,1=Available'
+  `name` varchar(200) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `stock` int(50) DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 1 COMMENT '0=Unavailable,1=Available'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `name`, `description`, `price`, `status`) VALUES
-(2, 1, 'Hot Pot', 'a communal meal that involves a pot filled with broth constantly simmered by a heat source underneath', 352, 1),
-(3, 1, 'Kung Pao Chicken', 'Kung Pao chicken, also transcribed Gong Bao or Kung Po, is a spicy, stir-fried Chinese dish made with cubes of chicken, peanuts, vegetables, and chili peppers.', 520, 1),
-(4, 1, 'Ma Po Tofu', 'Mapo tofu is a popular Chinese dish from Sichuan province. ', 450, 1),
-(5, 6, 'Tofu', 'The Japanese eat it alone, as if it were meat or cheese. Another popular way of eating tofu is to serve it fried.', 452, 1),
-(6, 6, 'Tempura', 'A simple and traditional tempura batter is typically made of ice water, flour, and egg yolks.', 443, 1),
-(7, 6, 'Yakitori', 'This type is usually served with a sweet tare sauce, and depending on the region, it can also come with raw egg yolk for dipping.', 452, 1),
-(8, 4, 'Pakora', 'Pakoras are made by coating ingredients, usually vegetables, in a spiced batter, then deep frying them. ', 452, 1),
-(9, 4, 'Vada Pav', 'Vada pav, alternatively spelt wada pao, is a vegetarian fast food dish native to the Indian state of Maharashtra. ', 50, 1),
-(10, 4, 'Paratha', 'Paratha is a flatbread native to South Asia, prevalent throughout the modern-day nations of India, Sri Lanka, Pakistan, Nepal, Bangladesh, Maldives, Afghanistan, Myanmar, Malaysia, Singapore, Mauritius, Fiji, Guyana, Suriname, and Trinidad and Tobago where wheat is the traditional staple.', 80, 1),
-(11, 9, 'Pad Thai', 'Pad thai, phat thai, or phad thai, is a stir-fried rice noodle dish commonly served as a street food in Thailand as part of the countrys cuisine.', 452, 1);
+INSERT INTO `products` (`id`, `category_id`, `name`, `description`, `stock`, `price`, `status`) VALUES
+(2, 1, 'Hot Pot', 'a communal meal that involves a pot filled with broth constantly simmered by a heat source underneath', 98, 352, 1),
+(3, 1, 'Kung Pao Chicken', 'Kung Pao chicken, also transcribed Gong Bao or Kung Po, is a spicy, stir-fried Chinese dish made with cubes of chicken, peanuts, vegetables, and chili peppers.', 99, 520, 1),
+(4, 6, 'Ma Po Tofu', 'Mapo tofu is a popular Chinese dish from Sichuan province. ', 100, 450, 1),
+(5, 6, 'Tofu ', 'The Japanese eat it alone, as if it were meat or cheese. Another popular way of eating tofu is to serve it fried.', 100, 452, 1),
+(6, 6, 'Tempura', 'A simple and traditional tempura batter is typically made of ice water, flour, and egg yolks.', 100, 443, 1),
+(7, 6, 'Yakitori', 'This type is usually served with a sweet tare sauce, and depending on the region, it can also come with raw egg yolk for dipping.', 100, 452, 1),
+(9, 4, 'Vada Pav', 'Vada pav, alternatively spelt wada pao, is a vegetarian fast food dish native to the Indian state of Maharashtra. ', 100, 50, 1),
+(10, 4, 'Paratha', 'Paratha is a flatbread native to South Asia, prevalent throughout the modern-day nations of India, Sri Lanka, Pakistan, Nepal, Bangladesh, Maldives, Afghanistan, Myanmar, Malaysia, Singapore, Mauritius, Fiji, Guyana, Suriname, and Trinidad and Tobago where wheat is the traditional staple.', 100, 80, 1),
+(11, 9, 'Pad Thai', 'Pad thai, phat thai, or phad thai, is a stir-fried rice noodle dish commonly served as a street food in Thailand as part of the countrys cuisine.', 100, 452, 1),
+(12, 3, 'Raviolli', 'Yummy pizza', 5, 100, 1),
+(14, 10, 'IceCreama', '', 0, 200, 0);
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,17 @@ INSERT INTO `sales` (`id`, `ref_no`, `total_amount`, `amount_tendered`, `order_n
 (162, '966995333082', 573, 600, 2147483647, '2024-11-05 01:19:41', 'Cash'),
 (163, '157190228232', 1397, 2000, 2147483647, '2024-11-05 01:21:13', 'Cash'),
 (164, '111678322636', 1749, 3000, 2147483647, '2024-11-05 16:09:48', 'Mobile Money'),
-(165, '157588947702', 802, 950, 2147483647, '2024-11-05 16:28:56', 'Cash');
+(165, '157588947702', 802, 950, 2147483647, '2024-11-05 16:28:56', 'Cash'),
+(166, '891331997441', 352, 500, 2147483647, '2024-11-06 10:49:41', 'Mobile Money'),
+(167, '014715827738', 1322, 2000, 2147483647, '2024-11-06 12:32:08', 'Cash'),
+(168, '283493499702', 532, 588, 2147483647, '2024-11-06 12:54:45', 'Mobile Money'),
+(169, '883235752595', 3182, 5000, 2147483647, '2024-11-06 16:04:40', 'Mobile Money'),
+(170, '574753097821', 352, 400, 2147483647, '2024-11-06 16:07:40', 'Cash'),
+(171, '646313567347', 352, 400, 2147483647, '2024-11-08 15:53:54', 'Cash'),
+(172, '869825815582', 872, 1000, 2147483647, '2024-11-08 15:55:55', 'Cash'),
+(173, '348592012659', 100, 101, 2147483647, '2024-11-08 16:01:27', 'Cash'),
+(174, '213720094324', 100, 101, 2147483647, '2024-11-08 16:04:59', 'Cash'),
+(175, '984870280434', 200, 200, 2147483647, '2024-11-08 19:09:04', 'Cash');
 
 -- --------------------------------------------------------
 
@@ -531,7 +542,24 @@ INSERT INTO `sale_items` (`id`, `order_id`, `product_id`, `qty`, `price`, `amoun
 (216, 164, 6, 1, 443, 443),
 (217, 164, 2, 1, 352, 352),
 (218, 165, 2, 1, 352, 352),
-(219, 165, 4, 1, 450, 450);
+(219, 165, 4, 1, 450, 450),
+(220, 166, 2, 1, 352, 352),
+(221, 167, 2, 1, 352, 352),
+(222, 167, 3, 1, 520, 520),
+(223, 167, 4, 1, 450, 450),
+(224, 168, 8, 1, 452, 452),
+(225, 168, 10, 1, 80, 80),
+(226, 169, 2, 5, 352, 1760),
+(227, 169, 3, 1, 520, 520),
+(228, 169, 4, 1, 450, 450),
+(229, 169, 11, 1, 452, 452),
+(230, 170, 2, 1, 352, 352),
+(231, 171, 2, 1, 352, 352),
+(232, 172, 3, 1, 520, 520),
+(233, 172, 2, 1, 352, 352),
+(234, 173, 13, 1, 100, 100),
+(235, 174, 13, 1, 100, 100),
+(236, 175, 14, 1, 200, 200);
 
 -- --------------------------------------------------------
 
@@ -641,25 +669,25 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
 
 --
 -- AUTO_INCREMENT for table `sales_receipt`
 --
 ALTER TABLE `sales_receipt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `sale_items`
 --
 ALTER TABLE `sale_items`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
 
 --
 -- AUTO_INCREMENT for table `system_settings`
