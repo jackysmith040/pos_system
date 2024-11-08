@@ -52,7 +52,8 @@
 						<div class="row">
 							<div class="col-md-12 text-center">
 								<button class="btn btn-primary"> Save</button>
-								<button class="btn btn-default" type="button" onclick="$('#manage-product').get(0).reset()"> Cancel</button>
+								<button class="btn btn-default" type="button" onclick="$('#manage-product').get(0).reset(); window.location.href='index.php?page=products'">Cancel</button>
+
 							</div>
 						</div>
 					</div>
