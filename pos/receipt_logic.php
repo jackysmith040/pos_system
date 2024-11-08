@@ -47,15 +47,34 @@ foreach ($product_ids as $index => $product_id) {
     $price = $prices[$index];
     $amount = round($qty * $price, 2);
 
-    // Update stock
-    $stockUpdate = $conn->query("UPDATE products SET stock = stock - $qty WHERE id = '$product_id'");
+    // Step 4: Check current stock level before updating
+    $stockCheckQuery = $conn->query("SELECT stock FROM products WHERE id = '$product_id' LIMIT 1");
+    if ($stockCheckQuery->num_rows > 0) {
+        $currentStock = $stockCheckQuery->fetch_assoc()['stock'];
 
+        // Ensure stock is sufficient before proceeding
+        if ($currentStock < $qty) {
+            echo 0; // Insufficient stock, cannot complete sale
+            exit;
+        }
+    } else {
+        echo 0; // Product not found
+        exit;
+    }
+
+    // Update stock by reducing quantity
+    $stockUpdate = $conn->query("UPDATE products SET stock = stock - $qty WHERE id = '$product_id'");
     if (!$stockUpdate) {
         echo 0; // Error updating stock
         exit;
     }
 
-    // Fetch item description
+    // Check if stock is zero or below after update to mark as unavailable
+    if (($currentStock - $qty) <= 0) {
+        $conn->query("UPDATE products SET status = 0 WHERE id = '$product_id'");
+    }
+
+    // Fetch item description based on product_id
     $productQuery = $conn->query("SELECT name FROM products WHERE id = '$product_id' LIMIT 1");
     $item_description = $productQuery->num_rows > 0 ? $productQuery->fetch_assoc()['name'] : 'Unknown Item';
 
