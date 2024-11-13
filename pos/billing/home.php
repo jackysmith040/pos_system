@@ -384,13 +384,40 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                 return false;
             }
 
-            var newRow = `
+//             var newRow = `
+// <tr class="o-item" data-id="${data.id}">
+//     <td>
+//         <div class="d-flex align-items-center justify-content-between">
+//             <span class="btn-minus" style="cursor: pointer;"><b>-</b></span>
+//             <input type="number" name="qty[]" value="${qty}" min="1" style="width: 60px; text-align: center;">
+//             <span class="btn-plus" style="cursor: pointer;"><b>+</b></span>
+//         </div>
+//     </td>
+//     <td>
+//         <input type="hidden" name="item_id[]" value="">
+//         <input type="hidden" name="product_id[]" value="${data.id}">
+//         <span class="font-weight-bold">${data.name}</span>
+//         <small class="psmall text-muted">(${parseFloat(data.price).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2 })})</small>
+//     </td>
+//     <td class="text-right">
+//         <input type="hidden" name="price[]" value="${data.price}">
+//         <input type="hidden" name="amount[]" value="${data.price}">
+//         <span class="amount font-weight-bold">${parseFloat(data.price).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2 })}</span>
+//     </td>
+//     <td>
+//         <span class="btn-rem" style="cursor: pointer;"><b><i class="fa fa-trash-alt text-danger"></i></b></span>
+//     </td>
+// </tr>
+// `;
+
+
+var newRow = `
 <tr class="o-item" data-id="${data.id}">
     <td>
         <div class="d-flex align-items-center justify-content-between">
-            <span class="btn-minus" style="cursor: pointer;"><b>-</b></span>
+           
             <input type="number" name="qty[]" value="${qty}" min="1" style="width: 60px; text-align: center;">
-            <span class="btn-plus" style="cursor: pointer;"><b>+</b></span>
+         
         </div>
     </td>
     <td>
@@ -409,6 +436,7 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
     </td>
 </tr>
 `;
+
 
             $('#o-list tbody').append(newRow);
             qty_func();

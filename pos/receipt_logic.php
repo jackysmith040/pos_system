@@ -33,7 +33,12 @@ extract($settings, EXTR_PREFIX_ALL, 'config');
 
 // Step 12: Prepare data for each item and insert into `sales_receipt`
 $cashier_name = $_SESSION['login_name'] ?? 'Unknown';
+
+//  Just for the invoice
+// $sales = $conn->query("SELECT * FROM sales ORDER BY unix_timestamp(date_created) DESC");
 $invoice_no = $sale['ref_no'];
+
+
 
 // Prepare the insert query for sales receipt
 $insertReceiptQuery = $conn->prepare("

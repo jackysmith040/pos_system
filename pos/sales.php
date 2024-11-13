@@ -41,10 +41,10 @@
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>Invoice</th>
-                                    <th>Sale Number</th>
+                                    <!-- <th>Sale Number</th> -->
                                     <th>Amount</th>
                                     <th>Payment Method</th> <!-- New Column for Payment Method -->
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -58,20 +58,20 @@
                                     <td class="text-center"><?php echo $i++ ?></td>
                                     <td><p><?php echo date("M d, Y", strtotime($row['date_created'])) ?></p></td>
                                     <td><p><?php echo $row['amount_tendered'] > 0 ? $row['ref_no'] : 'N/A' ?></p></td>
-                                    <td><p><?php echo $row['order_number'] ?></p></td>
+                                    <!-- <td><p><?php echo $row['order_number'] ?></p></td> -->
                                     <td><p class="text-right"><?php echo number_format($row['total_amount'], 2) ?></p></td>
                                     <td><p><?php echo $row['payment_method'] ?></p></td> <!-- Display Payment Method -->
-                                    <td class="text-center">
+                                    <!-- <td class="text-center">
                                         <?php if($row['amount_tendered'] > 0): ?>
                                             <span class="badge badge-success">Paid</span>
                                         <?php else: ?>
                                             <span class="badge badge-primary">Unpaid</span>
                                         <?php endif; ?>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" type="button" onclick="location.href='billing/index.php?id=<?php echo $row['id'] ?>'" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button>
+                                        <!-- <button class="btn btn-sm btn-primary" type="button" onclick="location.href='billing/index.php?id=<?php echo $row['id'] ?>'" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button> -->
                                         <!-- <button class="btn btn-sm btn-info view_order" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-eye"></i></button> -->
-                                        <button class="btn btn-sm btn-danger delete_order" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i></button>
+                                        <button class="btn btn-md btn-danger delete_order" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                                 <?php endwhile; ?>
