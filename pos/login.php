@@ -43,7 +43,7 @@ if (isset($_SESSION['login_id'])) {
 	    position: fixed;
 	    top:0;
 	    left: 0;
-	    background-image: url('assets/uploads/background.webp');
+	    background-image: url('assets/uploads/background.jpg');
 	    background-size: cover;
 	}
 	main#main{
@@ -61,7 +61,7 @@ if (isset($_SESSION['login_id'])) {
   	
   		<div class="align-self-center w-100">
 		
-  		<div id="login-center" class="row justify-content-start">
+  		<div id="login-center" class="row justify-content-center">
   			<div class="card col-md-3 ml-5">
   				<div class="card-body py-5 px-1">
   					<h4 class="text-dark text-center mb-5"><!-- ?php echo $_SESSION['system']['name'] ?> -->
