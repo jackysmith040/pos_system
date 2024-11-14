@@ -13,25 +13,25 @@ function clearReceipt($sale_id, $deleteSalesRecord = false) {
         return false; // Error deleting receipt
     }
 
-    // Step 2: Optional: Delete related sales record if specified
-    if ($deleteSalesRecord) {
-        $deleteSalesQuery = $conn->prepare("DELETE FROM sales WHERE id = ?");
-        $deleteSalesQuery->bind_param("i", $sale_id);
+    // // Step 2: Optional: Delete related sales record if specified
+    // if ($deleteSalesRecord) {
+    //     $deleteSalesQuery = $conn->prepare("DELETE FROM sales WHERE id = ?");
+    //     $deleteSalesQuery->bind_param("i", $sale_id);
 
-        if (!$deleteSalesQuery->execute()) {
-            return false; // Error deleting sales record
-        }
-    }
+    //     if (!$deleteSalesQuery->execute()) {
+    //         return false; // Error deleting sales record
+    //     }
+    // }
 
     return true; // Success
 }
 
-// Example of how to call this function
+// Check if the form has been submitted and call this function
 if (isset($_POST['sale_id'])) {
     $sale_id = $_POST['sale_id'];
-    $deleteSalesRecord = isset($_POST['delete_sales_record']) && $_POST['delete_sales_record'] == 'true'; // Check if the sales record should be deleted
+    // $deleteSalesRecord = isset($_POST['delete_sales_record']) && $_POST['delete_sales_record'] == 'true'; // Check if the sales record should be deleted
 
-    if (clearReceipt($sale_id, $deleteSalesRecord)) {
+    if (clearReceipt($sale_id)) {
         echo 1; // Success
     } else {
         echo 0; // Error
