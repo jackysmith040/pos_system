@@ -323,87 +323,127 @@ class Action
 	}
 	
 	function save_order()
+	{
+		extract($_POST);
+	
+		// Capture payment method from POST request
+		$payment_method = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
+	
+		// Begin data string with existing fields
+		$data = " total_amount = '$total_amount' ";
+		$data .= ", amount_tendered = '$total_tendered' ";
+		$data .= ", order_number = '$order_number' ";
+		$data .= ", payment_method = '$payment_method' "; // Add payment method to data string
+	
+		// Prepare the item details for storage
+		$item_details = [];
+		foreach ($item_id as $k => $v) {
+			// Retrieve product details from the database
+			$product_query = $this->db->query("SELECT id, name, description, stock, price FROM products WHERE id = '{$product_id[$k]}'");
+			$product = $product_query->fetch_assoc();
+	
+			// Prepare item data to be stored
+			$item_details[] = [
+				'id' => $product['id'],
+				'name' => $product['name'],
+				'description' => $product['description'],
+				'quantity' => $qty[$k],
+				'stock' => $product['stock'],
+				'price' => $product['price'],
+				'totalPrice' => $price[$k]
+			];
+		}
+	
+		// Convert item details to JSON for storage
+		$item_details_json = json_encode($item_details);
+	
+		if (empty($id)) {
+			// Generate unique reference number
+			$i = 0;
+			while ($i == 0) {
+				$ref_no = mt_rand(1, 999999999999);
+				$ref_no = sprintf("%'012d", $ref_no);
+				$chk = $this->db->query("SELECT * FROM sales where ref_no ='$ref_no' ");
+				if ($chk->num_rows <= 0) {
+					$i = 1;
+				}
+			}
+			$data .= ", ref_no = '$ref_no' ";
+	
+			// Insert new record into sales table with item details (as JSON)
+			$stmt = $this->db->prepare("INSERT INTO sales (total_amount, amount_tendered, order_number, payment_method, ref_no, details) VALUES (?, ?, ?, ?, ?, ?)");
+			$stmt->bind_param('ddssss', $total_amount, $total_tendered, $order_number, $payment_method, $ref_no, $item_details_json);
+			$save = $stmt->execute();
+			if ($save) {
+				$id = $this->db->insert_id;
+			}
+		} else {
+			// Update existing record
+			$stmt = $this->db->prepare("UPDATE sales SET total_amount = ?, amount_tendered = ?, order_number = ?, payment_method = ?, details = ? WHERE id = ?");
+			$stmt->bind_param('ddssss', $total_amount, $total_tendered, $order_number, $payment_method, $item_details_json, $id);
+			$save = $stmt->execute();
+		}
+	
+		if ($save) {
+			$ids = array_filter($item_id);
+			$ids = implode(',', $ids);
+			if (!empty($ids)) {
+				$this->db->query("DELETE FROM sale_items WHERE order_id = $id AND id NOT IN ($ids)");
+			}
+	
+			// Insert or update sale_items table with individual item details
+			foreach ($item_id as $k => $v) {
+				$data = " order_id = $id ";
+				$data .= ", product_id = '{$product_id[$k]}' ";
+				$data .= ", qty = '{$qty[$k]}' ";
+				$data .= ", price = '{$price[$k]}' ";
+				$data .= ", amount = '{$amount[$k]}' ";
+				if (empty($v)) {
+					$this->db->query("INSERT INTO sale_items SET $data");
+				} else {
+					$this->db->query("UPDATE sale_items SET $data WHERE id = $v");
+				}
+			}
+	
+			// Trigger `receipt_logic.php` with the saved order ID
+			$url = "/receipt_logic.php";
+			$postData = ['sale_id' => $id];
+	
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+			curl_exec($ch);
+			curl_close($ch);
+	
+			return $id;
+		}
+	}
+
+	function delete_order()
 {
     extract($_POST);
 
-    // Capture payment method from POST request
-    $payment_method = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
+    // Fetch the sale details (including the details JSON)
+    $result = $this->db->query("SELECT details FROM sales WHERE id = $id");
+    $sale = $result->fetch_assoc();
+    $item_details = json_decode($sale['details'], true);
 
-    // Begin data string with existing fields
-    $data = " total_amount = '$total_amount' ";
-    $data .= ", amount_tendered = '$total_tendered' ";
-    $data .= ", order_number = '$order_number' ";
-    $data .= ", payment_method = '$payment_method' "; // Add payment method to data string
+    // Replenish stock for each item in the sale
+    foreach ($item_details as $item) {
+        $product_id = $item['id']; // Use 'id' to update the stock
+        $qty_sold = $item['quantity']; // Use 'quantity' to update the stock
 
-    if (empty($id)) {
-        // Generate unique reference number
-        $i = 0;
-        while ($i == 0) {
-            $ref_no = mt_rand(1, 999999999999);
-            $ref_no = sprintf("%'012d", $ref_no);
-            $chk = $this->db->query("SELECT * FROM sales where ref_no ='$ref_no' ");
-            if ($chk->num_rows <= 0) {
-                $i = 1;
-            }
-        }
-        $data .= ", ref_no = '$ref_no' ";
-
-        // Insert new record
-        $stmt = $this->db->prepare("INSERT INTO sales SET total_amount = ?, amount_tendered = ?, order_number = ?, payment_method = ?, ref_no = ?");
-        $stmt->bind_param('ddsss', $total_amount, $total_tendered, $order_number, $payment_method, $ref_no);
-        $save = $stmt->execute();
-        if ($save) {
-            $id = $this->db->insert_id;
-        }
-    } else {
-        // Update existing record
-        $stmt = $this->db->prepare("UPDATE sales SET total_amount = ?, amount_tendered = ?, order_number = ?, payment_method = ? WHERE id = ?");
-        $stmt->bind_param('ddssi', $total_amount, $total_tendered, $order_number, $payment_method, $id);
-        $save = $stmt->execute();
+        // Update the stock in the products table
+        $this->db->query("UPDATE products SET stock = stock + $qty_sold WHERE id = $product_id");
     }
 
-    if ($save) {
-        $ids = array_filter($item_id);
-        $ids = implode(',', $ids);
-        if (!empty($ids)) {
-            $this->db->query("DELETE FROM sale_items WHERE order_id = $id AND id NOT IN ($ids)");
-        }
-        foreach ($item_id as $k => $v) {
-            $data = " order_id = $id ";
-            $data .= ", product_id = '{$product_id[$k]}' ";
-            $data .= ", qty = '{$qty[$k]}' ";
-            $data .= ", price = '{$price[$k]}' ";
-            $data .= ", amount = '{$amount[$k]}' ";
-            if (empty($v)) {
-                $this->db->query("INSERT INTO sale_items SET $data");
-            } else {
-                $this->db->query("UPDATE sale_items SET $data WHERE id = $v");
-            }
-        }
+    // Delete the sale and sale items
+    $delete = $this->db->query("DELETE FROM sales WHERE id = $id");
+    $delete2 = $this->db->query("DELETE FROM sale_items WHERE order_id = $id");
 
-        // Step: Trigger `receipt_logic.php` with the saved order ID
-        // Using cURL to trigger the receipt logic
-        $url = "/receipt_logic.php";
-        $postData = ['sale_id' => $id];
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-        curl_exec($ch);
-        curl_close($ch);
-
-        return $id;
+    if ($delete) {
+        return 1; // Success
     }
 }
 
-
-	function delete_order()
-	{
-		extract($_POST);
-		$delete = $this->db->query("DELETE FROM sales where id = " . $id);
-		$delete2 = $this->db->query("DELETE FROM sale_items where order_id = " . $id);
-		if ($delete) {
-			return 1;
-		}
-	}
 }
