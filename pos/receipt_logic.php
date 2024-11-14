@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connect.php'; // Database connection
+include 'db_connect.php';  // Database connection
 
 // Step 1: Validate sale_id from POST request
 if (empty($_POST['sale_id'])) {
@@ -36,7 +36,23 @@ $cashier_name = $_SESSION['login_name'] ?? 'Unknown';
 
 //  Just for the invoice
 // $sales = $conn->query("SELECT * FROM sales ORDER BY unix_timestamp(date_created) DESC");
-$invoice_no = $sale['ref_no'];
+
+$invoiceQuery = $conn->query("SELECT MAX(order_number) as max_order_number FROM sales");
+
+if ($invoiceQuery->num_rows > 0) {
+    $currentInvoice = $invoiceQuery->fetch_assoc()['max_order_number'];
+    $currentInvoice = $currentInvoice+ 1;
+    // str_pad($currentInvoice, 8, '0', STR_PAD_LEFT);
+    $invoice_no = str_pad($currentInvoice, 8, '0', STR_PAD_LEFT);
+} else {
+    $invoice_no = str_pad('1', 8, '0', STR_PAD_LEFT);;
+}
+
+// echo '<pre>';
+// echo $invoice_no;
+// echo '</pre>';
+// die();
+// $invoice_no = $sale['ref_no'];
 
 
 

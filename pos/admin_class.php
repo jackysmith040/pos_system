@@ -33,7 +33,7 @@ class Action
 
 			return json_encode(['success' => true, 'userType' => $user['type']]); // Return user type
 		} else {
-			return json_encode(['success' => false]); // Login failed
+			return json_encode(['success' => false, 'userType' => $user['type']]); // Login failed
 		}
 	}
 
