@@ -1,10 +1,10 @@
-<?php 
+<?php
 include('../db_connect.php');
 include('../redirect_to_login.php');
 ?>
 
 <style>
-  <?php include('./css/home.php.css') ?>
+    <?php include('./css/home.php.css') ?>
 </style>
 <?php
 function generateOrderNumber()
@@ -155,7 +155,7 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                                 <tbody>
                                     <tr>
                                         <td><b>
-                                                <h6>Total  : </h6>
+                                                <h6>Total : </h6>
                                             </b></td>
                                         <td class="text-right">
                                             <input type="hidden" name="total_amount" value="0">
@@ -183,18 +183,19 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                     <div class="form-group col-sm-8">
                         <!-- <label style="position: relative; top: -0.80rem;">Payment Method</label> -->
                         <radio-row class="radio_btns-row">
-                        <div>
-                            <label for="payment_method_cash">
-                                <input type="radio" id="payment_method_cash" name="payment_method" value="Cash" checked>
-                                Cash
-                            </label>
-                        </div>
-                        <div>
-                            <label for="payment_method_mobile_money">
-                                <input type="radio" id="payment_method_mobile_money" name="payment_method"
-                                    value="Mobile Money"> Mobile Money
-                            </label>
-                        </div>
+                            <div>
+                                <label for="payment_method_cash">
+                                    <input type="radio" id="payment_method_cash" name="payment_method" value="Cash"
+                                        checked>
+                                    Cash
+                                </label>
+                            </div>
+                            <div>
+                                <label for="payment_method_mobile_money">
+                                    <input type="radio" id="payment_method_mobile_money" name="payment_method"
+                                        value="Mobile Money"> Mobile Money
+                                </label>
+                            </div>
                         </radio-row>
                     </div>
 
@@ -384,34 +385,34 @@ $order_number = isset($order_number) ? $order_number : generateOrderNumber();
                 return false;
             }
 
-//             var newRow = `
-// <tr class="o-item" data-id="${data.id}">
-//     <td>
-//         <div class="d-flex align-items-center justify-content-between">
-//             <span class="btn-minus" style="cursor: pointer;"><b>-</b></span>
-//             <input type="number" name="qty[]" value="${qty}" min="1" style="width: 60px; text-align: center;">
-//             <span class="btn-plus" style="cursor: pointer;"><b>+</b></span>
-//         </div>
-//     </td>
-//     <td>
-//         <input type="hidden" name="item_id[]" value="">
-//         <input type="hidden" name="product_id[]" value="${data.id}">
-//         <span class="font-weight-bold">${data.name}</span>
-//         <small class="psmall text-muted">(${parseFloat(data.price).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2 })})</small>
-//     </td>
-//     <td class="text-right">
-//         <input type="hidden" name="price[]" value="${data.price}">
-//         <input type="hidden" name="amount[]" value="${data.price}">
-//         <span class="amount font-weight-bold">${parseFloat(data.price).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2 })}</span>
-//     </td>
-//     <td>
-//         <span class="btn-rem" style="cursor: pointer;"><b><i class="fa fa-trash-alt text-danger"></i></b></span>
-//     </td>
-// </tr>
-// `;
+            //             var newRow = `
+            // <tr class="o-item" data-id="${data.id}">
+            //     <td>
+            //         <div class="d-flex align-items-center justify-content-between">
+            //             <span class="btn-minus" style="cursor: pointer;"><b>-</b></span>
+            //             <input type="number" name="qty[]" value="${qty}" min="1" style="width: 60px; text-align: center;">
+            //             <span class="btn-plus" style="cursor: pointer;"><b>+</b></span>
+            //         </div>
+            //     </td>
+            //     <td>
+            //         <input type="hidden" name="item_id[]" value="">
+            //         <input type="hidden" name="product_id[]" value="${data.id}">
+            //         <span class="font-weight-bold">${data.name}</span>
+            //         <small class="psmall text-muted">(${parseFloat(data.price).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2 })})</small>
+            //     </td>
+            //     <td class="text-right">
+            //         <input type="hidden" name="price[]" value="${data.price}">
+            //         <input type="hidden" name="amount[]" value="${data.price}">
+            //         <span class="amount font-weight-bold">${parseFloat(data.price).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2 })}</span>
+            //     </td>
+            //     <td>
+            //         <span class="btn-rem" style="cursor: pointer;"><b><i class="fa fa-trash-alt text-danger"></i></b></span>
+            //     </td>
+            // </tr>
+            // `;
 
 
-var newRow = `
+            var newRow = `
 <tr class="o-item" data-id="${data.id}">
     <td>
         <div class="d-flex align-items-center justify-content-between">
@@ -565,15 +566,15 @@ var newRow = `
                                         printWindow.onafterprint = function () {
                                             printWindow.close(); // Close the window after printing
 
-
-
-                                            // Clear the sales_receipt record
+                                            // Clear all sales_receipt records
                                             $.ajax({
                                                 url: '../clear_receipt.php',
                                                 method: 'POST',
-                                                data: { sale_id: resp }, // Pass the sale ID
                                                 success: function () {
                                                     location.reload(); // Refresh the page
+                                                },
+                                                error: function () {
+                                                    alert_toast("Error clearing sales receipt.", 'danger');
                                                 }
                                             });
                                         };
