@@ -1,3 +1,4 @@
+<link rel="icon" type="image/x-icon" href="../assets/uploads/fav-ico.svg">
 <meta content="" name="descriptison">
   <meta content="" name="keywords">
     <link rel="stylesheet" href="../assets/font-awesome/css/all.min.css">
