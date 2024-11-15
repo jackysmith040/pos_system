@@ -2,7 +2,7 @@
 <html lang="en">
 <?php 
 session_start();
-include('./db_connect.php');
+include './db_connect.php' ;
 ob_start();
 // if(!isset($_SESSION['system'])){
 	$system = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();

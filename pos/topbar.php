@@ -22,12 +22,21 @@
     <div class="row w-100">
       <div class="col-md-2 d-flex align-items-center">
         <!-- Logo Section -->
-        <img src="./assets/uploads/fav-ico.svg" width="100px" height="40px" class="custom-logo" alt="Logo">
+
+          <!-- if the person is admin redirect to admin dashboard -->
+           <?php if($_SESSION['login_type'] == 1):?>
+            <a href="index.php?page=home" class="navbar-brand">
+       
+            <img src="./assets/uploads/fav-ico.svg" width="100px" height="40px" class="custom-logo" alt="Logo">
+            </a>
+          <?php else:?>
+            <a href="index.php?page=sales" class="navbar-brand">
+            <img src="./assets/uploads/fav-ico.svg" width="100px" height="40px" class="custom-logo" alt="Logo">
+            </a>
+          <?php endif;?>
       </div>
 
       <div class="col-md-8">
-        <!-- Optional Alert Section (Commented Out) -->
-        <!-- <p style="color: red; font-size: 14px;"><b>Alert</b> This Project is developed for Academic study purpose only. | Never Sell or Distribute with your Name OR Branding. </p> -->
       </div>
 
       <div class="col-md-2 d-flex justify-content-end align-items-center">
