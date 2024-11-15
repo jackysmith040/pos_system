@@ -31,7 +31,7 @@
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>Invoice</th>
-                                    <th>Items</th> <!-- New Column for Item Details -->
+                                    <!-- <th>Items</th> New Column for Item Details -->
                                     <th>Amount</th>
                                     <th>Payment Method</th>
                                     <th>Actions</th>
@@ -58,9 +58,9 @@
                                         <td>
                                             <p><?php echo $row['ref_no'] ?></p>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <p><?php echo $item_summary ?></p>
-                                        </td> <!-- Display Items -->
+                                        </td> Display Items -->
                                         <td>
                                             <p class="text-right"><?php echo number_format($row['total_amount'], 2) ?></p>
                                         </td>

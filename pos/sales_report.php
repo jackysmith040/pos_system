@@ -141,6 +141,7 @@ $('#print').click(function(){
     var _c = $('#report-list').clone();
     var ns = $('noscript').clone();
     ns.append(_c);
+    // var nw = window.open('', '_blank', 'width=1600,height=700');
     var nw = window.open('', '_blank', 'width=1600,height=700');
     nw.document.write('<p class="text-center"><b>Sales Report as of <?php echo date("F, Y", strtotime($year . "-" . $month . "-01")) ?></b></p>');
     nw.document.write(ns.html());
