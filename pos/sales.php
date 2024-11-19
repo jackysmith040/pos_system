@@ -72,9 +72,17 @@
                                                 data-id="<?php echo $row['id'] ?>">
                                                 <i class="fa fa-eye"></i> View
                                             </button>
-                                            <button class="btn btn-sm btn-danger delete_order" type="button"
+
+                                            <!-- if the person is admin they can have delete option -->
+                                            <?php if ($_SESSION['login_type'] == 1): ?>
+
+                                                <button class="btn btn-sm btn-danger delete_order" type="button"
+                                                    data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i>
+                                                    Delete</button>
+                                            <?php endif; ?>
+                                            <!-- <button class="btn btn-sm btn-danger delete_order" type="button"
                                                 data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-alt"></i>
-                                                Delete</button>
+                                                Delete</button> -->
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
