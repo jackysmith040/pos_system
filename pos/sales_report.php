@@ -130,25 +130,68 @@ $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
 </noscript>
 
 <script>
-$('#month, #day, #year').change(function(){
-    const month = $('#month').val();
-    const day = $('#day').val();
-    const year = $('#year').val();
-    location.replace(`index.php?page=sales_report&month=${month}&day=${day}&year=${year}`);
-});
+    $('#print').click(function () {
+        // Clone the table for printing
+        const reportTable = `
+            <style>
+                table#report-list {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                table#report-list td, table#report-list th {
+                    border: 1px solid;
+                    padding: 5px;
+                }
+                .text-center {
+                    text-align: center;
+                }
+                .text-right {
+                    text-align: right;
+                }
+            </style>
+            <div>
+                <p class="text-center">
+                    <b>Sales Report as of <?php echo date("F, Y", strtotime($year . "-" . $month . "-01")) ?></b>
+                </p>
+                ${$('#report-list')[0].outerHTML}
+            </div>
+        `;
 
-$('#print').click(function(){
-    var _c = $('#report-list').clone();
-    var ns = $('noscript').clone();
-    ns.append(_c);
-    // var nw = window.open('', '_blank', 'width=1600,height=700');
-    var nw = window.open('', '_blank', 'width=1600,height=700');
-    nw.document.write('<p class="text-center"><b>Sales Report as of <?php echo date("F, Y", strtotime($year . "-" . $month . "-01")) ?></b></p>');
-    nw.document.write(ns.html());
-    nw.document.close();
-    nw.print();
-    setTimeout(() => {
-        nw.close();
-    }, 500);
-});
+        // Open a new print window
+        const printWindow = window.open('', '_blank', 'width=900,height=700');
+
+        // Write the cloned table into the print window
+        printWindow.document.write(reportTable);
+        printWindow.document.close();
+
+        // Trigger print dialog
+        printWindow.print();
+
+        // Function to check if the print window is closed (either by print or cancel)
+        function checkPrintWindowStatus() {
+            // Check if the print window is closed
+            if (printWindow.closed) {
+                location.reload();  // Refresh the main page when closed
+            } else {
+                // If still open, check again after 500ms
+                setTimeout(checkPrintWindowStatus, 500);
+            }
+        }
+
+        // Start checking the status of the print window
+        checkPrintWindowStatus();
+
+        // Force the page to refresh when the user cancels or closes the print window
+        printWindow.onbeforeunload = function() {
+            location.reload();  // Refresh the page when the print dialog is canceled
+        };
+    });
+
+    // Handle year, month, and day filters
+    $('#month, #day, #year').change(function () {
+        const month = $('#month').val();
+        const day = $('#day').val();
+        const year = $('#year').val();
+        location.replace(`index.php?page=sales_report&month=${month}&day=${day}&year=${year}`);
+    });
 </script>
